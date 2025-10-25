@@ -1,6 +1,6 @@
 # 🏬 Warehouse Management API  
 **Spring Boot RESTful Application** for managing warehouses, products, categories, transactions, and users.  
-Created with ❤️ by **Murodullo (Murod)** 💻  
+Created with ❤️ by **Murod** 💻  
 
 ---
 
@@ -143,11 +143,11 @@ You can:
 ---
 
 ## 👨‍💻 Author
-**👤 Murodullo (Murod)**  
+**👤 Murod**  
 💬 *Java Developer | Learning every day | Building strong foundations*
 
-GitHub: [github.com/yourusername](https://github.com/yourusername)  
-Email: *your_email@example.com*  
+GitHub: [github.com/sdlxnvv](https://github.com/yourusername)  
+Email: *sadulloxonovm@yandex.ru*  
 
 ---
 
