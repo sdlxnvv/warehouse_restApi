@@ -1,0 +1,34 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/warehouse
+    username: postgres
+    password: 1221
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update   # Создаёт или обновляет таблицы при запуске (для dev)
+    show-sql: true        # Показывает SQL-запросы в консоли
+    properties:
+      hibernate:
+        format_sql: true  # Делает SQL-запросы читаемыми
+
+# 🔍 Логирование (показывает параметры SQL и контроллеры)
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.springframework.web: INFO
+
+# 📘 Swagger (красивая документация API)
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    display-request-duration: true  # Показывает, сколько длился запрос
+    tags-sorter: alpha              # Сортирует контроллеры по алфавиту
+    operations-sorter: method       # Сортирует методы (GET, POST, PUT, DELETE)
