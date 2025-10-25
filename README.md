@@ -146,7 +146,7 @@ You can:
 **👤 Murod**  
 💬 *Java Developer | Learning every day | Building strong foundations*
 
-GitHub: [github.com/sdlxnvv](https://github.com/yourusername)  
+GitHub: [github.com/sdlxnvv](https://github.com/sdlxnvv)  
 Email: *sadulloxonovm@yandex.ru*  
 
 ---
