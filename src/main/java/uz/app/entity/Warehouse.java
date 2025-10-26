@@ -1,5 +1,6 @@
 package uz.app.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,9 +31,11 @@ public class Warehouse {
     private String metadata;
 
     @OneToMany(mappedBy = "warehouseFrom")
+    @JsonIgnore
     private List<Transaction> transactionsFrom;
 
     @OneToMany(mappedBy = "warehouseTo")
+    @JsonIgnore
     private List<Transaction> transactionsTo;
 
     private LocalDateTime createdAt;

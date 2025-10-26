@@ -1,5 +1,7 @@
 package uz.app.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,12 +30,14 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
+    @JsonIgnoreProperties({"products"})
     private Category category;
 
     @Column(nullable = false)
     private BigDecimal price;
 
     @OneToMany(mappedBy = "product")
+    @JsonIgnore
     private List<Transaction> transactions;
 
     private LocalDateTime createdAt;

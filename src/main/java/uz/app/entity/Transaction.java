@@ -1,5 +1,6 @@
 package uz.app.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ public class Transaction {
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
+    @JsonIgnoreProperties({"transactions"})  // 🔥 чтобы product не тянул обратно все транзакции
     private Product product;
 
     @ManyToOne
@@ -45,6 +47,7 @@ public class Transaction {
 
     @ManyToOne
     @JoinColumn(name = "created_by")
+    @JsonIgnoreProperties({"transactions"})  // 🔥 user без обратной ссылки
     private User createdBy;
 
     private LocalDateTime createdAt;
