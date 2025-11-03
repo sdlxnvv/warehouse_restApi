@@ -7,7 +7,6 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import jakarta.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
-import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {

@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Tag(name = "User Controller", description = "CRUD operations for managing users")
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 public class UserController {
 

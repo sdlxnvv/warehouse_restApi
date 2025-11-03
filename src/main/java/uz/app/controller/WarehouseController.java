@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Tag(name = "Warehouse Controller", description = "CRUD operations for managing warehouses")
 @RestController
-@RequestMapping("/api/warehouses")
+@RequestMapping("/api/v1/warehouses")
 @RequiredArgsConstructor
 public class WarehouseController {
 

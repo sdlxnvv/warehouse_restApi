@@ -9,11 +9,12 @@ import uz.app.entity.Product;
 import uz.app.service.ProductService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Tag(name = "Product Controller", description = "CRUD operations for managing products")
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
 public class ProductController {
 
@@ -60,4 +61,10 @@ public class ProductController {
         productService.deleteProduct(id);
         return ResponseEntity.noContent().build(); // ✅ 204 No Content
     }
+//
+//    @GetMapping("/count")
+//    public Map<String, Long> countProducts() {
+//        return Map.of("count", productRepository.count());
+//    }
+
 }

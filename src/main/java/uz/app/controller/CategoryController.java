@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @Tag(name = "Category Controller", description = "CRUD + search + pagination for categories")
 @RestController
-@RequestMapping("/api/categories")
+@RequestMapping("/api/v1/categories")
 @RequiredArgsConstructor
 public class CategoryController {
 

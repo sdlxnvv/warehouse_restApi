@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Tag(name = "Transaction Controller", description = "CRUD operations for managing product transactions")
 @RestController
-@RequestMapping("/api/transactions")
+@RequestMapping("/api/v1/transactions")
 @RequiredArgsConstructor
 public class TransactionController {
 
