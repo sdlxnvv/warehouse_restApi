@@ -55,4 +55,9 @@ public class WarehouseService {
                 .orElseThrow(() -> new RuntimeException("Warehouse not found with id: " + id));
         warehouseRepository.delete(existing);
     }
+
+    public long getCount() {
+        return warehouseRepository.count();
+    }
+
 }

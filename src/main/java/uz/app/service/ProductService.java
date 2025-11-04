@@ -80,4 +80,9 @@ public class ProductService {
         }
         return products;
     }
+
+    public long getCount() {
+        return productRepository.count();
+    }
+
 }

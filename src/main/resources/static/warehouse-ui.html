@@ -4,91 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Warehouse — Admin UI</title>
-    <style>
-        :root{
-            --bg:#071127; --card:#0b1220; --glass: rgba(255,255,255,0.03);
-            --muted:#94a3b8; --accent:#06b6d4; --accent-2:#0ea5a3;
-            --radius:14px; --pad:16px; --maxw:1200px; --glass-2: rgba(255,255,255,0.02);
-            font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-            color-scheme: dark;
-        }
-        *{box-sizing:border-box}
-        body{
-            margin:0; min-height:100vh; background:linear-gradient(180deg,#04101b 0%, #071127 100%);
-            color:#e6eef6; display:flex; align-items:flex-start; justify-content:center; padding:28px;
-        }
-        .app {
-            width:100%; max-width:var(--maxw); background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
-            border-radius:18px; padding:18px; box-shadow:0 12px 40px rgba(2,6,23,0.7);
-            display:grid; grid-template-columns: 320px 1fr; gap:18px;
-        }
 
-        /* SIDEBAR */
-        .sidebar { padding:var(--pad); background:var(--glass); border-radius:12px; height:calc(100vh - 96px); overflow:auto;}
-        .brand { font-weight:800; color:var(--accent); font-size:18px; margin-bottom:12px; display:flex; align-items:center; gap:8px;}
-        .nav { display:flex; flex-direction:column; gap:8px; margin-bottom:12px; }
-        .nav button { text-align:left; background:transparent; border:0; color:var(--muted); padding:10px; border-radius:8px; cursor:pointer; font-weight:600; }
-        .nav button.active{ background:rgba(255,255,255,0.03); color:#fff; }
-
-        /* MAIN */
-        .main { padding:var(--pad); }
-        .topbar { display:flex; gap:12px; align-items:center; justify-content:space-between; margin-bottom:12px; }
-        .search { display:flex; gap:8px; align-items:center; }
-        .search input { padding:8px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:inherit; min-width:220px;}
-        .btn { padding:8px 12px; border-radius:10px; border:0; cursor:pointer; background:var(--accent); color:#022; font-weight:600;}
-        .muted { color:var(--muted); font-size:13px; }
-
-        .card { background:var(--card); padding:14px; border-radius:12px; margin-bottom:12px; box-shadow: 0 6px 20px rgba(2,6,23,0.5);}
-        .grid { display:grid; grid-template-columns: repeat(3,1fr); gap:12px; margin-bottom:12px; }
-        .table { width:100%; border-collapse:collapse; }
-        table thead th { text-align:left; padding:8px 10px; font-size:13px; color:var(--muted); position:sticky; top:0; background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);}
-        table tbody td { padding:10px; border-top:1px dashed rgba(255,255,255,0.02); font-size:14px; vertical-align:middle;}
-        .actions { display:flex; gap:8px; }
-        .chip { display:inline-block; padding:4px 8px; border-radius:999px; background:rgba(255,255,255,0.03); font-size:12px; color:var(--muted); }
-
-        /* FORM / MODAL */
-        .modal-backdrop {
-            position:fixed; inset:0; display:none; align-items:center; justify-content:center;
-            background:linear-gradient(rgba(2,6,23,0.6), rgba(2,6,23,0.6)); z-index:60;
-            opacity:0; transition:opacity .22s ease;
-        }
-        .modal-backdrop.show { display:flex; opacity:1; }
-        .modal {
-            width:100%;
-            max-width:760px;
-            border-radius:14px;
-            overflow:hidden;
-            transform:translateY(18px);
-            opacity:0;
-            transition:transform .26s cubic-bezier(.2,.9,.2,1), opacity .26s;
-            background:#0d1525; /* 👈 плотный тёмный фон */
-            box-shadow:0 14px 45px rgba(0,0,0,0.75); /* более мягкая тень */
-            padding:22px;
-            border:1px solid rgba(255,255,255,0.05);
-        }
-        .modal-backdrop.show .modal { transform:translateY(0); opacity:1; }
-
-        form label { display:block; font-size:13px; margin:8px 0 6px; color:var(--muted); }
-        form input, form select, form textarea { width:100%; padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:inherit; }
-        .row { display:flex; gap:8px; }
-        .row > * { flex:1; }
-
-        /* Responsive */
-        @media (max-width:980px){
-            .app { grid-template-columns: 1fr; padding:12px; }
-            .sidebar { height:auto; order:2; }
-            .main { order:1; }
-            .grid { grid-template-columns: repeat(2,1fr); }
-        }
-
-        /* helpers */
-        .center { display:flex; align-items:center; gap:8px; }
-        .danger { background:transparent; color:#ff7b7b; border:1px solid rgba(255,255,255,0.04); }
-        .secondary { background:transparent; color:var(--muted); border:1px solid rgba(255,255,255,0.03); }
-        .tiny { font-size:12px; color:var(--muted); }
-        .hidden { display:none!important; }
-        .actions .btn-sm { padding:6px 8px; border-radius:8px; font-size:13px; }
-    </style>
+    <!-- подключи свой CSS файл (warehouse-ui.css) рядом с этим HTML -->
+    <link rel="stylesheet" href="warehouse-ui.css">
 </head>
 <body>
 <div class="app" id="app">
@@ -140,17 +58,22 @@
         <section id="content">
             <!-- DASHBOARD CARDS -->
             <div class="grid">
-                <div class="card">
+                <div class="card" onclick="openView('products')">
                     <div class="muted tiny">Products</div>
                     <div style="font-size:20px; font-weight:700" id="countProducts">—</div>
+                    <div class="tooltiptext" id="tipProducts">Click to view products</div>
                 </div>
-                <div class="card">
+
+                <div class="card" onclick="openView('warehouses')">
                     <div class="muted tiny">Warehouses</div>
                     <div style="font-size:20px; font-weight:700" id="countWarehouses">—</div>
+                    <div class="tooltiptext" id="tipWarehouses">Click to view warehouses</div>
                 </div>
-                <div class="card">
+
+                <div class="card" onclick="openView('transactions')">
                     <div class="muted tiny">Transactions</div>
                     <div style="font-size:20px; font-weight:700" id="countTx">—</div>
+                    <div class="tooltiptext" id="tipTx">Click to view transactions</div>
                 </div>
             </div>
 
@@ -168,8 +91,7 @@
                             <th>Name</th><th>Category</th><th>Price</th><th>Qty</th><th>Warehouse</th><th>Actions</th>
                         </tr>
                         </thead>
-                        <tbody id="tableBody">
-                        </tbody>
+                        <tbody id="tableBody"></tbody>
                     </table>
                 </div>
 
@@ -185,15 +107,15 @@
     </main>
 </div>
 
-<!-- MODAL (single modal used for all Add/Edit) -->
+<!-- MODAL (Add/Edit) -->
 <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
         <div style="display:flex; justify-content:space-between; align-items:center;">
             <div style="font-weight:700" id="modalTitle">Create</div>
             <div><button class="secondary" id="modalClose">Close</button></div>
         </div>
+
         <form id="modalForm" style="margin-top:12px">
-            <!-- dynamic content injected here -->
             <div id="modalFields"></div>
 
             <div style="display:flex; gap:8px; margin-top:14px;">
@@ -201,116 +123,141 @@
                 <button class="secondary" type="button" id="modalCancel">Cancel</button>
                 <button class="danger hidden" type="button" id="modalDelete">Delete</button>
             </div>
+
             <div class="tiny muted" style="margin-top:10px">Fields marked * are required. Price in USD.</div>
         </form>
     </div>
 </div>
 
+<!-- Toast container -->
+<div class="toast-container" id="toastContainer"></div>
+
 <script>
-    /*
-      Full-featured UI:
-      - Works with Page<T> or List<T>
-      - Single modal for Add/Edit with animations
-      - Auto-refresh after save/delete
-      - Dynamic headers/rows per entity type
-      - Uses /api/v1 base
-    */
-
+    // Config
     const API_BASE = '/api/v1';
-    let token = null; // Set JWT here if you have auth
+    let token = null; // set if you have JWT
 
-    // Utility fetch with auth and JSON handling
-    async function apiFetch(path, opts = {}) {
-        const headers = opts.headers || {};
-        if (!headers['Content-Type'] && !(opts.body instanceof FormData)) headers['Content-Type'] = 'application/json';
-        if (token) headers['Authorization'] = 'Bearer ' + token;
-        const res = await fetch(API_BASE + path, {...opts, headers});
-        const text = await res.text().catch(()=>null);
-        if (!res.ok) {
-            // Try parse JSON error
-            let errMsg = `${res.status} ${res.statusText}`;
-            try { const js = JSON.parse(text); if (js.message) errMsg = js.message; } catch(e){}
-            throw new Error(errMsg);
-        }
-        try { return text ? JSON.parse(text) : null; } catch(e){ return text; }
+    // Simple toast
+    function showToast(msg, type = 'success') {
+        const c = document.getElementById('toastContainer');
+        const t = document.createElement('div');
+        t.className = 'toast ' + (type === 'error' ? 'error' : 'success');
+        t.textContent = msg;
+        c.appendChild(t);
+        setTimeout(() => t.remove(), 3500);
     }
 
-    // Init UI wiring
+    // Universal fetch helper (handles 204, JSON errors)
+    async function apiFetch(path, opts = {}) {
+        const headers = Object.assign({}, opts.headers || {});
+        if (!headers['Content-Type'] && !(opts.body instanceof FormData)) headers['Content-Type'] = 'application/json';
+        if (token) headers['Authorization'] = 'Bearer ' + token;
+
+        const res = await fetch(API_BASE + path, { ...opts, headers });
+        const text = await res.text().catch(() => null);
+        if (res.status === 204) return null;
+        if (!res.ok) {
+            let msg = `${res.status} ${res.statusText}`;
+            try { const j = JSON.parse(text); if (j.message) msg = j.message; } catch(e) {}
+            showToast('❌ ' + msg, 'error');
+            throw new Error(msg);
+        }
+        try { return text ? JSON.parse(text) : null; } catch(e) { return text; }
+    }
+
+    // load counts
+    async function loadCounts() {
+        try {
+            const [p, w, t] = await Promise.all([
+                apiFetch('/products/count').catch(() => ({ count: 0 })),
+                apiFetch('/warehouses/count').catch(() => ({ count: 0 })),
+                apiFetch('/transactions/count').catch(() => ({ count: 0 }))
+            ]);
+            const now = new Date().toLocaleString();
+            document.getElementById('countProducts').textContent = (p?.count ?? '—');
+            document.getElementById('countWarehouses').textContent = (w?.count ?? '—');
+            document.getElementById('countTx').textContent = (t?.count ?? '—');
+            // update tooltip texts only if elements exist
+            const tp = document.getElementById('tipProducts'); if (tp) tp.textContent = `Click to view products • Updated ${now}`;
+            const tw = document.getElementById('tipWarehouses'); if (tw) tw.textContent = `Click to view warehouses • Updated ${now}`;
+            const tt = document.getElementById('tipTx'); if (tt) tt.textContent = `Click to view transactions • Updated ${now}`;
+        } catch (e) {
+            console.warn('loadCounts error', e);
+            showToast('⚠️ Error loading counts', 'error');
+        }
+    }
+
+    // State
+    let state = { view: 'products', page: 0, size: 10, lastList: [] };
+
+    // Init
     document.addEventListener('DOMContentLoaded', () => {
-        // Nav wiring
-        document.querySelectorAll('.nav button').forEach(b => {
-            b.onclick = () => {
-                document.querySelectorAll('.nav button').forEach(x => x.classList.remove('active'));
-                b.classList.add('active');
-                openView(b.dataset.view);
-            };
+        // nav buttons
+        document.querySelectorAll('.nav button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                openView(btn.dataset.view);
+            });
         });
 
-        document.getElementById('btnAdd').onclick = () => openModalForCreate();
-        document.getElementById('btnRefresh').onclick = () => refresh();
-        document.getElementById('btnSearch').onclick = () => { state.page = 0; refresh(); };
-        document.getElementById('q').addEventListener('keypress', e => { if (e.key === 'Enter') { state.page = 0; refresh(); }});
-        document.getElementById('btnDocs').onclick = () => window.open('/swagger-ui.html', '_blank');
-        document.getElementById('prevPage').onclick = () => changePage(-1);
-        document.getElementById('nextPage').onclick = () => changePage(1);
+        // actions
+        document.getElementById('btnAdd').addEventListener('click', () => openModalForCreate());
+        document.getElementById('btnRefresh').addEventListener('click', () => refresh());
+        document.getElementById('btnSearch').addEventListener('click', () => { state.page = 0; refresh(); });
+        document.getElementById('q').addEventListener('keypress', (e) => { if (e.key === 'Enter') { state.page = 0; refresh(); }});
+        document.getElementById('btnDocs').addEventListener('click', () => window.open('/swagger-ui.html', '_blank'));
+        document.getElementById('prevPage').addEventListener('click', () => changePage(-1));
+        document.getElementById('nextPage').addEventListener('click', () => changePage(1));
 
-        // Modal controls
-        document.getElementById('modalClose').onclick = closeModal;
-        document.getElementById('modalCancel').onclick = closeModal;
+        // modal controls
+        document.getElementById('modalClose').addEventListener('click', closeModal);
+        document.getElementById('modalCancel').addEventListener('click', closeModal);
         document.getElementById('modalBackdrop').addEventListener('click', (e) => { if (e.target === document.getElementById('modalBackdrop')) closeModal(); });
+        document.getElementById('modalForm').addEventListener('submit', onModalSave);
+        document.getElementById('modalDelete').addEventListener('click', onModalDelete);
 
-        document.getElementById('modalForm').onsubmit = onModalSave;
-        document.getElementById('modalDelete').onclick = onModalDelete;
-
-        // initial
+        // start
         openView('products');
     });
 
-    let state = { view: 'products', page: 0, size: 10, lastList: [] };
+    // view helpers
+    function openView(view) {
+        state.view = view;
+        state.page = 0;
+        document.getElementById('listTitle').textContent = view.charAt(0).toUpperCase() + view.slice(1);
+        setTableHeaders(view);
+        refresh();
+    }
 
-    // Helpers
-    function changePage(delta) { state.page = Math.max(0, state.page + delta); refresh(); }
-    function openView(view) { state.view = view; state.page = 0; document.getElementById('listTitle').textContent = capitalize(view); setTableHeaders(view); refresh(); }
-    function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
-
-    // Table header mapping per view
     function setTableHeaders(view) {
         const thead = document.getElementById('tableHeader');
-        if (view === 'products') {
-            thead.innerHTML = `<th>Name</th><th>Category</th><th>Price</th><th>Qty</th><th>Warehouse</th><th>Actions</th>`;
-        } else if (view === 'categories') {
-            thead.innerHTML = `<th>Name</th><th>Description</th><th>Actions</th>`;
-        } else if (view === 'warehouses') {
-            thead.innerHTML = `<th>Name</th><th>Address</th><th>Capacity</th><th>Actions</th>`;
-        } else if (view === 'transactions') {
-            thead.innerHTML = `<th>Product</th><th>Type</th><th>Qty</th><th>Warehouse</th><th>Date</th><th>Actions</th>`;
-        } else if (view === 'users') {
-            thead.innerHTML = `<th>Username</th><th>Email</th><th>Role</th><th>Actions</th>`;
-        } else {
-            thead.innerHTML = `<th>Name</th><th>Actions</th>`;
-        }
+        if (!thead) return;
+        if (view === 'products') thead.innerHTML = `<th>Name</th><th>Category</th><th>Price</th><th>Qty</th><th>Warehouse</th><th>Actions</th>`;
+        else if (view === 'categories') thead.innerHTML = `<th>Name</th><th>Description</th><th>Actions</th>`;
+        else if (view === 'warehouses') thead.innerHTML = `<th>Name</th><th>Address</th><th>Capacity</th><th>Actions</th>`;
+        else if (view === 'transactions') thead.innerHTML = `<th>Product</th><th>Type</th><th>Qty</th><th>Warehouse</th><th>Date</th><th>Actions</th>`;
+        else if (view === 'users') thead.innerHTML = `<th>Username</th><th>Email</th><th>Role</th><th>Actions</th>`;
+        else thead.innerHTML = `<th>Name</th><th>Actions</th>`;
     }
-    // Refresh list (с поиском)
+
+    // data list
     async function refresh() {
         const q = document.getElementById('q').value.trim().toLowerCase();
         const path = `/${state.view}?page=${state.page}&size=${state.size}` + (q ? `&q=${encodeURIComponent(q)}` : '');
         const tbody = document.getElementById('tableBody');
-        tbody.innerHTML = `<tr><td colspan="6" class="muted tiny">Loading...</td></tr>`;
-
+        tbody.innerHTML = `<tr><td colspan="6" class="muted tiny centered">Loading...</td></tr>`;
         try {
             const data = await apiFetch(path);
             renderList(data, q);
-            loadCounts(); // update dashboard counts
+            loadCounts();
         } catch (err) {
-            tbody.innerHTML = `<tr><td colspan="6" class="muted tiny">Error: ${escapeHtml(err.message)}</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="6" class="muted tiny centered">Error: ${escapeHtml(err.message)}</td></tr>`;
         }
     }
 
-    // Render list supporting Page<T> and List<T> + client-side filtering fallback
     function renderList(data, query) {
-        let arr = Array.isArray(data) ? data : Array.isArray(data?.content) ? data.content : [];
-
-        // 🧠 Client-side filtering fallback (если backend не фильтрует по q)
+        let arr = Array.isArray(data) ? data : (Array.isArray(data?.content) ? data.content : []);
         if (query) {
             const q = query.toLowerCase();
             arr = arr.filter(item => {
@@ -328,7 +275,7 @@
         state.lastList = arr;
 
         if (arr.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="6" class="muted tiny">No items</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="6" class="muted tiny centered">No items found</td></tr>`;
             document.getElementById('pagerInfo').textContent = `Page ${state.page + 1}`;
             return;
         }
@@ -339,72 +286,40 @@
             tbody.appendChild(tr);
         });
 
-        const total = data?.totalElements ?? arr.length;
-        const totalPages = data?.totalPages ?? 1;
+        // if backend provides pagination, show pages (best-effort)
+        const total = (data?.totalElements ?? state.lastList.length);
+        const totalPages = (data?.totalPages ?? 1);
         document.getElementById('pagerInfo').textContent = `Page ${state.page + 1} of ${totalPages}, total ${total} items`;
     }
 
-
-    // Row renderer per view
     function renderRowForView(view, item) {
+        const safe = v => (v === null || v === undefined) ? '-' : v;
         if (view === 'products') {
-            return `
-      <td>${safe(item.name)}</td>
-      <td>${safe(item.category?.name)}</td>
-      <td>${item.price != null ? '$' + Number(item.price).toFixed(2) : '-'}</td>
-      <td>${item.quantity ?? '-'}</td>
-      <td>${safe(item.warehouse?.name)}</td>
-      <td class="actions">
-        <button class="secondary btn-sm" onclick="openModalForEdit('${item.id}')">Edit</button>
-        <button class="danger btn-sm" onclick="confirmDelete('${item.id}')">Delete</button>
-      </td>`;
+            const price = (item.price !== null && item.price !== undefined) ? ('$' + Number(item.price).toFixed(2)) : '-';
+            return `<td>${escapeHtml(item.name)}</td><td>${escapeHtml(item.category?.name)}</td><td>${price}</td><td>${escapeHtml(item.quantity)}</td><td>${escapeHtml(item.warehouse?.name)}</td><td class="actions"><button class="secondary btn-sm" onclick="openModalForEdit('${item.id}')">Edit</button><button class="danger btn-sm" onclick="confirmDelete('${item.id}')">Delete</button></td>`;
         }
         if (view === 'categories') {
-            return `
-      <td>${safe(item.name)}</td>
-      <td>${safe(item.description)}</td>
-      <td class="actions">
-        <button class="secondary btn-sm" onclick="openModalForEdit('${item.id}')">Edit</button>
-        <button class="danger btn-sm" onclick="confirmDelete('${item.id}')">Delete</button>
-      </td>`;
+            return `<td>${escapeHtml(item.name)}</td><td>${escapeHtml(item.description)}</td><td class="actions"><button class="secondary btn-sm" onclick="openModalForEdit('${item.id}')">Edit</button><button class="danger btn-sm" onclick="confirmDelete('${item.id}')">Delete</button></td>`;
         }
         if (view === 'warehouses') {
-            return `
-      <td>${safe(item.name)}</td>
-      <td>${safe(item.address)}</td>
-      <td>${item.capacity ?? '-'}</td>
-      <td class="actions">
-        <button class="secondary btn-sm" onclick="openModalForEdit('${item.id}')">Edit</button>
-        <button class="danger btn-sm" onclick="confirmDelete('${item.id}')">Delete</button>
-      </td>`;
+            return `<td>${escapeHtml(item.name)}</td><td>${escapeHtml(item.address)}</td><td>${escapeHtml(item.capacity)}</td><td class="actions"><button class="secondary btn-sm" onclick="openModalForEdit('${item.id}')">Edit</button><button class="danger btn-sm" onclick="confirmDelete('${item.id}')">Delete</button></td>`;
         }
         if (view === 'transactions') {
-            return `
-      <td>${safe(item.product?.name || item.productName)}</td>
-      <td>${safe(item.type)}</td>
-      <td>${item.quantity ?? '-'}</td>
-      <td>${safe(item.warehouse?.name)}</td>
-      <td>${safe(item.createdAt ? new Date(item.createdAt).toLocaleString() : '-')}</td>
-      <td class="actions">
-        <button class="secondary btn-sm" onclick="openModalForEdit('${item.id}')">Edit</button>
-        <button class="danger btn-sm" onclick="confirmDelete('${item.id}')">Delete</button>
-      </td>`;
+            const date = item.createdAt ? new Date(item.createdAt).toLocaleString() : '-';
+            return `<td>${escapeHtml(item.product?.name || item.productName)}</td><td>${escapeHtml(item.type)}</td><td>${escapeHtml(item.quantity)}</td><td>${escapeHtml(item.warehouse?.name)}</td><td>${escapeHtml(date)}</td><td class="actions"><button class="secondary btn-sm" onclick="openModalForEdit('${item.id}')">Edit</button><button class="danger btn-sm" onclick="confirmDelete('${item.id}')">Delete</button></td>`;
         }
         if (view === 'users') {
-            return `
-      <td>${safe(item.username || item.name)}</td>
-      <td>${safe(item.email)}</td>
-      <td>${safe(item.role)}</td>
-      <td class="actions">
-        <button class="secondary btn-sm" onclick="openModalForEdit('${item.id}')">Edit</button>
-        <button class="danger btn-sm" onclick="confirmDelete('${item.id}')">Delete</button>
-      </td>`;
+            return `<td>${escapeHtml(item.username || item.name)}</td><td>${escapeHtml(item.email)}</td><td>${escapeHtml(item.role)}</td><td class="actions"><button class="secondary btn-sm" onclick="openModalForEdit('${item.id}')">Edit</button><button class="danger btn-sm" onclick="confirmDelete('${item.id}')">Delete</button></td>`;
         }
-        // fallback
-        return `<td>${safe(item.name)}</td><td><button class="secondary" onclick="openModalForEdit('${item.id}')">Edit</button></td>`;
+        return `<td>${escapeHtml(item.name)}</td><td><button class="secondary" onclick="openModalForEdit('${item.id}')">Edit</button></td>`;
     }
 
-    // Modal logic
+    function changePage(delta) {
+        state.page = Math.max(0, state.page + delta);
+        refresh();
+    }
+
+    // Modal helpers
     function openModal(show) {
         const bd = document.getElementById('modalBackdrop');
         if (show) {
@@ -423,10 +338,20 @@
     }
     function openModalForEdit(id) {
         const item = state.lastList.find(x => String(x.id) === String(id));
-        buildModalForm(state.view, item);
-        document.getElementById('modalTitle').textContent = `Edit ${capitalizeSingular(state.view)}`;
-        document.getElementById('modalDelete').classList.remove('hidden');
-        openModal(true);
+        // if item found in lastList use it, otherwise fetch detail from API
+        if (item) {
+            buildModalForm(state.view, item);
+            document.getElementById('modalTitle').textContent = `Edit ${capitalizeSingular(state.view)}`;
+            document.getElementById('modalDelete').classList.remove('hidden');
+            openModal(true);
+            return;
+        }
+        apiFetch(`/${state.view}/${id}`).then(d => {
+            buildModalForm(state.view, d);
+            document.getElementById('modalTitle').textContent = `Edit ${capitalizeSingular(state.view)}`;
+            document.getElementById('modalDelete').classList.remove('hidden');
+            openModal(true);
+        }).catch(e => showToast('❌ ' + e.message, 'error'));
     }
     function closeModal() {
         document.getElementById('modalForm').reset();
@@ -439,124 +364,112 @@
     }
     function capitalizeSingular(v) { return v.replace(/s$/,''); }
 
-    // Build modal fields per entity and prefill if item provided
+    // Build modal form dynamically
     async function buildModalForm(view, item) {
         const container = document.getElementById('modalFields');
         container.innerHTML = '';
-        // Helpers to create inputs
-        function addInput(name, label, type='text', required=false, val='') {
+
+        function addInput(name, label, type='text', required=false, value='') {
             const id = `field_${name}`;
-            container.insertAdjacentHTML('beforeend', `<label for="${id}">${label}${required? ' *':''}</label>`);
-            container.insertAdjacentHTML('beforeend', `<input id="${id}" name="${name}" type="${type}" value="${val ?? ''}" ${required? 'required':''}/><div style="height:6px;"></div>`);
+            container.insertAdjacentHTML('beforeend', `<label for="${id}">${label}${required ? ' *' : ''}</label>`);
+            container.insertAdjacentHTML('beforeend', `<input id="${id}" name="${name}" type="${type}" value="${value ?? ''}" ${required ? 'required' : ''}/><div style="height:6px;"></div>`);
         }
-        function addSelect(name, label, options=[], required=false, val='') {
+
+        function addSelect(name, label, options=[], required=false, value='') {
             const id = `field_${name}`;
-            container.insertAdjacentHTML('beforeend', `<label for="${id}">${label}${required? ' *':''}</label>`);
+            container.insertAdjacentHTML('beforeend', `<label for="${id}">${label}${required ? ' *' : ''}</label>`);
             const sel = document.createElement('select');
             sel.name = name; sel.id = id;
             if (!required) sel.insertAdjacentHTML('beforeend', `<option value="">— select —</option>`);
             options.forEach(o => sel.insertAdjacentHTML('beforeend', `<option value="${o.id}">${escapeHtml(o.name)}</option>`));
             container.appendChild(sel);
             container.insertAdjacentHTML('beforeend', `<div style="height:6px;"></div>`);
-            if (val) sel.value = val;
+            if (value) sel.value = value;
         }
-        function addTextarea(name,label,val='') {
+
+        function addTextarea(name, label, value='') {
             const id = `field_${name}`;
             container.insertAdjacentHTML('beforeend', `<label for="${id}">${label}</label>`);
-            container.insertAdjacentHTML('beforeend', `<textarea id="${id}" name="${name}" rows="3">${val ?? ''}</textarea><div style="height:6px;"></div>`);
+            container.insertAdjacentHTML('beforeend', `<textarea id="${id}" name="${name}" rows="3">${value ?? ''}</textarea><div style="height:6px;"></div>`);
         }
 
-        // For selects we may need to fetch categories/warehouses
+        // fetch lookups if needed
         let categories = [], warehouses = [], products = [];
-
-        const fetchPromises = [];
         if (view === 'products' || view === 'transactions') {
-            fetchPromises.push(apiFetch('/categories?size=1000&page=0').then(d => categories = Array.isArray(d)?d:(d?.content||[])).catch(()=>[]));
-            fetchPromises.push(apiFetch('/warehouses?size=1000&page=0').then(d => warehouses = Array.isArray(d)?d:(d?.content||[])).catch(()=>[]));
+            categories = await apiFetch('/categories?size=1000&page=0').then(d => Array.isArray(d) ? d : (d?.content || [])).catch(()=>[]);
+            warehouses = await apiFetch('/warehouses?size=1000&page=0').then(d => Array.isArray(d) ? d : (d?.content || [])).catch(()=>[]);
         }
         if (view === 'transactions') {
-            fetchPromises.push(apiFetch('/products?size=1000&page=0').then(d => products = Array.isArray(d)?d:(d?.content||[])).catch(()=>[]));
+            products = await apiFetch('/products?size=1000&page=0').then(d => Array.isArray(d) ? d : (d?.content || [])).catch(()=>[]);
         }
-        await Promise.all(fetchPromises);
 
-        // Build fields per view
+        // build fields per view
         if (view === 'products') {
-            addInput('name','Name', 'text', true, item?.name);
-            addInput('sku','SKU', 'text', false, item?.sku);
-            addSelect('categoryId','Category', categories, true, item?.category?.id ?? item?.categoryId);
-            const priceVal = item?.price != null ? item.price : '';
-            addInput('price','Price (USD)','number', true, priceVal);
-            addInput('quantity','Quantity','number', true, item?.quantity ?? 0);
-            addSelect('warehouseId','Warehouse', warehouses, false, item?.warehouse?.id ?? item?.warehouseId);
-            addTextarea('description','Description', item?.description);
+            addInput('name','Name','text',true,item?.name);
+            addInput('sku','SKU','text',false,item?.sku);
+            addSelect('categoryId','Category',categories,true,item?.category?.id ?? item?.categoryId);
+            addInput('price','Price (USD)','number',true,item?.price ?? '');
+            addInput('quantity','Quantity','number',true,item?.quantity ?? 0);
+            addSelect('warehouseId','Warehouse',warehouses,false,item?.warehouse?.id ?? item?.warehouseId);
+            addTextarea('description','Description', item?.description ?? '');
         } else if (view === 'categories') {
             addInput('name','Name','text',true,item?.name);
-            addTextarea('description','Description', item?.description);
+            addTextarea('description','Description', item?.description ?? '');
         } else if (view === 'warehouses') {
             addInput('name','Name','text',true,item?.name);
             addInput('address','Address','text',false,item?.address);
             addInput('capacity','Capacity','number',false,item?.capacity);
         } else if (view === 'transactions') {
-            addSelect('productId','Product', products, true, item?.product?.id ?? item?.productId);
-            addSelect('type','Type', [{id:'PURCHASE', name:'PURCHASE'},{id:'SALE',name:'SALE'},{id:'TRANSFER',name:'TRANSFER'},{id:'ADJUSTMENT',name:'ADJUSTMENT'},{id:'RETURN',name:'RETURN'},{id:'DAMAGE',name:'DAMAGE'},{id:'INITIAL_STOCK',name:'INITIAL_STOCK'}], true, item?.type);
+            addSelect('productId','Product',products,true,item?.product?.id ?? item?.productId);
+            addSelect('type','Type',[{id:'PURCHASE',name:'PURCHASE'},{id:'SALE',name:'SALE'},{id:'TRANSFER',name:'TRANSFER'},{id:'ADJUSTMENT',name:'ADJUSTMENT'},{id:'RETURN',name:'RETURN'},{id:'DAMAGE',name:'DAMAGE'},{id:'INITIAL_STOCK',name:'INITIAL_STOCK'}],true,item?.type);
             addInput('quantity','Quantity','number',true,item?.quantity);
-            addSelect('warehouseId','Warehouse', warehouses, false, item?.warehouse?.id ?? item?.warehouseId);
-            addTextarea('note','Note', item?.note);
+            addSelect('warehouseId','Warehouse',warehouses,false,item?.warehouse?.id ?? item?.warehouseId);
+            addTextarea('note','Note', item?.note ?? '');
         } else if (view === 'users') {
             addInput('username','Username','text',true,item?.username);
             addInput('email','Email','email',true,item?.email);
-            addSelect('role','Role', [{id:'ADMIN',name:'ADMIN'},{id:'MANAGER',name:'MANAGER'},{id:'USER',name:'USER'}], true, item?.role);
-            addInput('password','Password','password', item ? false : true, ''); // password required on create
+            addSelect('role','Role',[{id:'ADMIN',name:'ADMIN'},{id:'MANAGER',name:'MANAGER'},{id:'USER',name:'USER'}],true,item?.role);
+            addInput('password','Password','password', !item, '');
         } else {
             addInput('name','Name','text',true,item?.name);
         }
 
-        // Store edit id on form dataset
+        // store edit id
         const form = document.getElementById('modalForm');
         form.dataset.editId = item?.id ? String(item.id) : '';
-        // show/hide delete button based on edit
-        if (item?.id) document.getElementById('modalDelete').dataset.editId = item.id;
-        else document.getElementById('modalDelete').dataset.editId = '';
-
-        // Focus first input
-        const firstInput = container.querySelector('input, select, textarea');
-        if (firstInput) firstInput.focus();
+        document.getElementById('modalDelete').dataset.editId = item?.id ? String(item.id) : '';
+        // focus first field
+        const first = container.querySelector('input, select, textarea');
+        if (first) first.focus();
     }
 
-    // Modal Save handler: POST (create) or PUT (update)
+    // save handler
     async function onModalSave(ev) {
         ev.preventDefault();
         const form = ev.target;
         const id = form.dataset.editId;
         const formData = new FormData(form);
-        // Build body according to view
         const body = {};
-        for (const [k,v] of formData.entries()) {
-            // cast numbers
-            if (k === 'price' || k === 'capacity' || k === 'quantity') {
-                body[k] = v === '' ? null : Number(v);
-            } else {
-                body[k] = v === '' ? null : v;
-            }
+        for (const [k, v] of formData.entries()) {
+            if (['price','capacity','quantity'].includes(k)) body[k] = v === '' ? null : Number(v);
+            else body[k] = v === '' ? null : v;
         }
 
         try {
             document.getElementById('modalSave').disabled = true;
-            if (id) {
-                await apiFetch(`/${state.view}/${id}`, { method: 'PUT', body: JSON.stringify(body) });
-            } else {
-                await apiFetch(`/${state.view}`, { method: 'POST', body: JSON.stringify(body) });
-            }
+            if (id) await apiFetch(`/${state.view}/${id}`, { method: 'PUT', body: JSON.stringify(body) });
+            else await apiFetch(`/${state.view}`, { method: 'POST', body: JSON.stringify(body) });
+            showToast('✅ Saved successfully');
             closeModal();
-            await refresh(); // auto-refresh
+            await refresh();
         } catch (err) {
-            alert('Error: ' + err.message);
+            showToast('❌ ' + err.message, 'error');
         } finally {
             document.getElementById('modalSave').disabled = false;
         }
     }
 
-    // Delete from modal
+    // delete
     async function onModalDelete() {
         const id = document.getElementById('modalDelete').dataset.editId;
         if (!id) return;
@@ -565,55 +478,29 @@
         closeModal();
     }
 
-    // Generic delete
     async function doDelete(view, id) {
         try {
             await apiFetch(`/${view}/${id}`, { method: 'DELETE' });
+            showToast('🗑️ Deleted successfully');
             await refresh();
-        } catch (err) {
-            alert('Error: ' + err.message);
+        } catch (e) {
+            showToast('❌ ' + e.message, 'error');
         }
     }
 
-    // Confirm delete helper used in rows
-    // confirmDelete defined earlier calls doDelete
-
-    // Load dashboard counts
-    async function loadCounts() {
-        try {
-            const p = await apiFetch('/products/count').catch(()=>({count:0}));
-            const w = await apiFetch('/warehouses/count').catch(()=>({count:0}));
-            const t = await apiFetch('/transactions/count').catch(()=>({count:0}));
-            document.getElementById('countProducts').textContent = p.count ?? '—';
-            document.getElementById('countWarehouses').textContent = w.count ?? '—';
-            document.getElementById('countTx').textContent = t.count ?? '—';
-        } catch(e){ console.warn('loadCounts err', e); }
+    // utilities
+    function escapeHtml(s) {
+        if (s === null || s === undefined) return '';
+        return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
     }
 
-    // Utility functions
-    function safe(v) { return v ?? '-'; }
-    function escapeHtml(s){ if (s==null) return ''; return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
-    function openModalForCreate() { buildModalForm(state.view, null); document.getElementById('modalTitle').textContent = `Create ${capitalizeSingular(state.view)}`; document.getElementById('modalDelete').classList.add('hidden'); openModal(true); }
-    function openModalForEdit(id) {
-        // Try get item from state.lastList; if not present, fetch detail
-        const item = state.lastList.find(x => String(x.id) === String(id));
-        if (item) { buildModalForm(state.view, item); document.getElementById('modalTitle').textContent = `Edit ${capitalizeSingular(state.view)}`; document.getElementById('modalDelete').classList.remove('hidden'); openModal(true); return; }
-        // fetch detail
-        apiFetch(`/${state.view}/${id}`).then(d => { buildModalForm(state.view, d); document.getElementById('modalTitle').textContent = `Edit ${capitalizeSingular(state.view)}`; document.getElementById('modalDelete').classList.remove('hidden'); openModal(true); }).catch(err => alert('Error loading item: ' + err.message));
-    }
-
-    // Expose confirmDelete globally for inline onclick in rows
-    window.confirmDelete = confirmDelete;
+    // expose for inline onclicks
     window.openModalForEdit = openModalForEdit;
+    window.confirmDelete = confirmDelete;
 
-    // Initial counts load is called in refresh()
+    // optional: auto refresh counts every 30s
+    setInterval(() => { try { loadCounts(); } catch (e) {} }, 30000);
 
-    // Small polyfill for replaceAll if needed
-    if (!String.prototype.replaceAll) {
-        String.prototype.replaceAll = function(search, replace) { return this.split(search).join(replace); };
-    }
-
-    // initial openView triggers refresh
 </script>
 </body>
 </html>

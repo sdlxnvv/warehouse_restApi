@@ -9,6 +9,7 @@ import uz.app.entity.Warehouse;
 import uz.app.service.WarehouseService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Tag(name = "Warehouse Controller", description = "CRUD operations for managing warehouses")
@@ -60,4 +61,11 @@ public class WarehouseController {
         warehouseService.deleteWarehouse(id);
         return ResponseEntity.noContent().build();
     }
+
+    @Operation(summary = "Get total count of warehouses")
+    @GetMapping("/count")
+    public Map<String, Long> countWarehouses() {
+        return Map.of("count", warehouseService.getCount());
+    }
+
 }

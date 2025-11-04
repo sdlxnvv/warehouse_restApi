@@ -9,6 +9,7 @@ import uz.app.entity.Transaction;
 import uz.app.service.TransactionService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Tag(name = "Transaction Controller", description = "CRUD operations for managing product transactions")
@@ -61,4 +62,11 @@ public class TransactionController {
         transactionService.deleteTransaction(id);
         return ResponseEntity.noContent().build(); // ✅ 204 No Content
     }
+
+    @Operation(summary = "Get total count of transactions")
+    @GetMapping("/count")
+    public Map<String, Long> countTransactions() {
+        return Map.of("count", transactionService.getCount());
+    }
+
 }
