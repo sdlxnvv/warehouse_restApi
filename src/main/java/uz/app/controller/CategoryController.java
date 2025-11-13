@@ -3,14 +3,13 @@ package uz.app.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uz.app.entity.Category;
 import uz.app.service.CategoryService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Tag(name = "Category Controller", description = "CRUD + search + pagination for categories")
@@ -68,5 +67,11 @@ public class CategoryController {
     public ResponseEntity<Void> deleteCategory(@PathVariable UUID id) {
         categoryService.deleteCategory(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Get total count of products")
+    @GetMapping("/count")
+    public Map<String, Long> countProducts() {
+        return Map.of("count", categoryService.getCount());
     }
 }

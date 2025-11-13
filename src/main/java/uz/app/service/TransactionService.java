@@ -79,4 +79,9 @@ public class TransactionService {
         }
         transactionRepository.deleteById(id);
     }
+
+    public long getCount() {
+        return transactionRepository.count();
+    }
+
 }

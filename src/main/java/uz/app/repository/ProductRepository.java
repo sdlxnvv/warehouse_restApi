@@ -21,11 +21,9 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
 
     List<Product> findDistinctByTransactionsWarehouseFromId(UUID warehouseId);
 
-    // Или Вариант B: явный запрос
     @Query("SELECT DISTINCT p FROM Product p JOIN p.transactions t WHERE t.warehouseFrom.id = :warehouseId")
     List<Product> findProductsByWarehouseId(@Param("warehouseId") UUID warehouseId);
 
 
 
-//    List<Product> findProductByWarehouseId(UUID warehouseId);
 }

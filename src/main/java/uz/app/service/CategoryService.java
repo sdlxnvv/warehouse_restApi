@@ -51,4 +51,8 @@ public class CategoryService {
     public List<Category> searchByName(String name) {
         return categoryRepository.findByNameContainingIgnoreCase(name);
     }
+
+    public long getCount() {
+        return categoryRepository.count();
+    }
 }

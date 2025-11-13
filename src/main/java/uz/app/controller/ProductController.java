@@ -61,10 +61,12 @@ public class ProductController {
         productService.deleteProduct(id);
         return ResponseEntity.noContent().build(); // ✅ 204 No Content
     }
-//
-//    @GetMapping("/count")
-//    public Map<String, Long> countProducts() {
-//        return Map.of("count", productRepository.count());
-//    }
+
+    @Operation(summary = "Get total count of products")
+    @GetMapping("/count")
+    public Map<String, Long> countProducts() {
+        return Map.of("count", productService.getCount());
+    }
+
 
 }
