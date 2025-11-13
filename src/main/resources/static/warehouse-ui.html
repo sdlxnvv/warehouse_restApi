@@ -75,6 +75,11 @@
                     <div style="font-size:20px; font-weight:700" id="countTx">—</div>
                     <div class="tooltiptext" id="tipTx">Click to view transactions</div>
                 </div>
+                <div class="card" onclick="openView('categories')">
+                    <div class="muted tiny">Categories</div>
+                    <div style="font-size:20px; font-weight:700" id="countCategories">—</div>
+                    <div class="tooltiptext" id="tipCategories">Click to view categories</div>
+                </div>
             </div>
 
             <!-- TABLE -->
@@ -165,22 +170,41 @@
         try { return text ? JSON.parse(text) : null; } catch(e) { return text; }
     }
 
-    // load counts
+    // Replace existing loadCounts() with this
     async function loadCounts() {
         try {
-            const [p, w, t] = await Promise.all([
-                apiFetch('/products/count').catch(() => ({ count: 0 })),
-                apiFetch('/warehouses/count').catch(() => ({ count: 0 })),
-                apiFetch('/transactions/count').catch(() => ({ count: 0 }))
+            const [p, c, w, t] = await Promise.all([
+                apiFetch('/products/count').catch(()=>({count:0})),
+                apiFetch('/categories/count').catch(()=>({count:0})),
+                apiFetch('/warehouses/count').catch(()=>({count:0})),
+                apiFetch('/transactions/count').catch(()=>({count:0}))
             ]);
+
             const now = new Date().toLocaleString();
-            document.getElementById('countProducts').textContent = (p?.count ?? '—');
-            document.getElementById('countWarehouses').textContent = (w?.count ?? '—');
-            document.getElementById('countTx').textContent = (t?.count ?? '—');
-            // update tooltip texts only if elements exist
-            const tp = document.getElementById('tipProducts'); if (tp) tp.textContent = `Click to view products • Updated ${now}`;
-            const tw = document.getElementById('tipWarehouses'); if (tw) tw.textContent = `Click to view warehouses • Updated ${now}`;
-            const tt = document.getElementById('tipTx'); if (tt) tt.textContent = `Click to view transactions • Updated ${now}`;
+
+            // update dashboard numbers (make sure elements exist in DOM)
+            const elP = document.getElementById('countProducts');
+            const elC = document.getElementById('countCategories');
+            const elW = document.getElementById('countWarehouses');
+            const elT = document.getElementById('countTx');
+
+            if (elP) elP.textContent = (p?.count ?? '—');
+            if (elC) elC.textContent = (c?.count ?? '—');
+            if (elW) elW.textContent = (w?.count ?? '—');
+            if (elT) elT.textContent = (t?.count ?? '—');
+
+            // update tooltips if present
+            const nowText = `Updated ${now}`;
+            const tipP = document.getElementById('tipProducts');
+            const tipC = document.getElementById('tipCategories');
+            const tipW = document.getElementById('tipWarehouses');
+            const tipT = document.getElementById('tipTx');
+
+            if (tipP) tipP.textContent = `Click to view products • ${nowText}`;
+            if (tipC) tipC.textContent = `Click to view categories • ${nowText}`;
+            if (tipW) tipW.textContent = `Click to view warehouses • ${nowText}`;
+            if (tipT) tipT.textContent = `Click to view transactions • ${nowText}`;
+
         } catch (e) {
             console.warn('loadCounts error', e);
             showToast('⚠️ Error loading counts', 'error');
