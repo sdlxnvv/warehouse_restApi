@@ -55,7 +55,7 @@ public class TransactionController {
         return ResponseEntity.ok(transaction);
     }
 
-    // ❌ DELETE
+    // ❌ Delete
     @Operation(summary = "Delete transaction by ID")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTransaction(@PathVariable UUID id) {
