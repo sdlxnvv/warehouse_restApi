@@ -20,7 +20,7 @@ public class TransactionController {
 
     private final TransactionService transactionService;
 
-    // ➕ CREATE
+    // ➕ Create
     @Operation(summary = "Create a new transaction")
     @PostMapping
     public ResponseEntity<Transaction> addTransaction(@RequestBody Transaction transaction) {
@@ -28,7 +28,7 @@ public class TransactionController {
         return ResponseEntity.status(201).body(savedTransaction); // ✅ 201 Created
     }
 
-    // 📋 READ ALL
+    // 📋 Read All
     @Operation(summary = "Get all transactions")
     @GetMapping
     public ResponseEntity<List<Transaction>> getAllTransactions() {
@@ -36,7 +36,7 @@ public class TransactionController {
         return ResponseEntity.ok(transactions);
     }
 
-    // 🔍 READ BY ID
+    // 🔍 Read By Id
     @Operation(summary = "Get transaction by ID")
     @GetMapping("/{id}")
     public ResponseEntity<Transaction> getTransactionById(@PathVariable UUID id) {
@@ -46,7 +46,7 @@ public class TransactionController {
                 : ResponseEntity.notFound().build(); // ✅ 404 if not found
     }
 
-    // ✏️ UPDATE
+    // ✏️ Update
     @Operation(summary = "Update transaction by ID")
     @PutMapping("/{id}")
     public ResponseEntity<Transaction> updateTransaction(@PathVariable UUID id,
